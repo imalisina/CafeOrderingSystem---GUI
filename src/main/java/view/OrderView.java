@@ -23,15 +23,23 @@ public class OrderView extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
 
-        JLabel titleLabel = new JLabel("Welcome to our Online Store");
+        JLabel titleLabel = new JLabel("Welcome to Persian Nights Cafe");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
 
-        browseButton = new JButton("Browse Products");
+        browseButton = new JButton("Browse Menu");
         browseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // TODO: Add browse products logic here
                 JOptionPane.showMessageDialog(OrderView.this, "Browse Products button clicked");
+                
+                SwingUtilities.invokeLater(new Runnable() 
+                {
+                    public void run() {
+                        MenuView menuView = new MenuView();
+                        menuView.setVisible(true);
+                    }
+                });
             }
         });
 
