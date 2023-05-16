@@ -1,10 +1,8 @@
-import javax.swing.*;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 import model.Login;
-import model.Register;
 import view.LoginView;
-import view.OrderView;
-import view.RegisterView;
 
 public class Main {
     public static void main(String[] args) {
