@@ -48,7 +48,19 @@ public class MenuView extends JFrame
                 String category = (String) box.getSelectedItem();
                 choice.setText(category);
                 String menu = orderModel.displayMealMenu(category);
-                JOptionPane.showMessageDialog(MenuView.this, "Menu:\n" + menu);
+                if (category.equals("Breakfast"))
+                {
+                    JOptionPane.showMessageDialog(MenuView.this, "Breakfast Menu:\n" + menu);
+                }
+                else if (category.equals("Lunch"))
+                {
+                    JOptionPane.showMessageDialog(MenuView.this, "Lunch Menu:\n" + menu);
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(MenuView.this, "Fast Food Menu:\n" + menu);
+                }
+                    
             }
         });
 
