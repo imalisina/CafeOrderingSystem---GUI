@@ -78,21 +78,7 @@ public class SummaryView extends JFrame {
         });
 
         terminateProgramButton = new JButton("Exit");
-
-        // define the action handler
         terminateProgramButton.addActionListener(new ActionListener() {
-        viewPriceButton = new JButton("View Price");
-        String price = orderModel.displayTotalPrice(); // Calculate the total price
-
-        viewPriceButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(SummaryView.this, "Total Price:\n" + price);
-            }
-        });
-
-        exitButton = new JButton("Exit");
-        exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(SummaryView.this, "THANK YOU!!");
@@ -123,7 +109,7 @@ public class SummaryView extends JFrame {
         coordinates.anchor = GridBagConstraints.CENTER;
         rootViewPanel.add(terminateProgramButton, coordinates);
 
-        // Adding panel to the main window 
+        // Adding panel to the main window
         add(rootViewPanel);
     }
 }
