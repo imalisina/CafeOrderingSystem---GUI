@@ -1,40 +1,61 @@
 package view;
 
+import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 public class OrderView extends JFrame {
-    private JButton browseButton;
-    private JButton orderButton;
 
+    // Define GUI attributes
+    private JButton processOrderButton;
+    private JButton processBrowseMenuButton;
+
+    /*
+     * Method name : OrderView
+     * Parameters : None
+     * Description : Alternate constructor
+     */
     public OrderView() {
+        // Define title of the view
         setTitle("Welcome");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Setup other configuration
         setSize(400, 250);
-        setLocationRelativeTo(null);
         setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        // initialize and render GUI components of the window - same as setup() method
+        // in pre-tutorials
         initComponents();
     }
 
+    /*
+     * Method name : initComponents
+     * Parameters : None
+     * Description : a method render GUI components - same as setup() method in
+     * pre-tutorials
+     */
     private void initComponents() {
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
+        // Define the main panel of the window and set it to the layout
+        JPanel rootViewPanel = new JPanel();
+        rootViewPanel.setLayout(new GridBagLayout());
+        GridBagConstraints coordinates = new GridBagConstraints();
 
-        JLabel titleLabel = new JLabel("Welcome to Persian Nights Cafe");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        // setting the grid pixel locations
+        coordinates.insets = new Insets(10, 10, 10, 10);
 
-        browseButton = new JButton("Browse Menu");
-        browseButton.addActionListener(new ActionListener() {
+        // define window's title and its font style
+        JLabel windowHeader = new JLabel("Welcome to Persian Nights Cafe");
+        windowHeader.setFont(new Font("Arial", Font.BOLD, 24));
+
+        processBrowseMenuButton = new JButton("Browse Menu");
+
+        // define the action handler
+        processBrowseMenuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: Add browse products logic here
-                JOptionPane.showMessageDialog(OrderView.this, "Browse Products button clicked");
-                
-                SwingUtilities.invokeLater(new Runnable() 
-                {
+                JOptionPane.showMessageDialog(OrderView.this, "Redirecting to Menu . . .");
+                SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
                         MenuView menuView = new MenuView();
                         menuView.setVisible(true);
@@ -43,15 +64,15 @@ public class OrderView extends JFrame {
             }
         });
 
-        orderButton = new JButton("Place Order");
-        orderButton.addActionListener(new ActionListener() {
+        processOrderButton = new JButton("Place Order");
+
+        // Define the action handler
+        processOrderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: Add place order logic here
-                JOptionPane.showMessageDialog(OrderView.this, "Place Order button clicked");
+                JOptionPane.showMessageDialog(OrderView.this, "Redirecting to the Order . . .");
 
-                SwingUtilities.invokeLater(new Runnable() 
-                {
+                SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
                         PlaceOrderView placeOrderView = new PlaceOrderView();
                         placeOrderView.setVisible(true);
@@ -60,26 +81,28 @@ public class OrderView extends JFrame {
             }
         });
 
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.CENTER;
-        gbc.weighty = 0.1;
-        mainPanel.add(titleLabel, gbc);
+        // setup grid coordinations for each element in the layout
+        coordinates.gridx = 0;
+        coordinates.gridy = 0;
+        coordinates.gridwidth = 2;
+        coordinates.anchor = GridBagConstraints.CENTER;
+        coordinates.weighty = 0.1;
+        rootViewPanel.add(windowHeader, coordinates);
 
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.CENTER;
-        gbc.weighty = 0.0;
-        mainPanel.add(browseButton, gbc);
+        coordinates.gridx = 0;
+        coordinates.gridy = 1;
+        coordinates.gridwidth = 2;
+        coordinates.anchor = GridBagConstraints.CENTER;
+        coordinates.weighty = 0.0;
+        rootViewPanel.add(processBrowseMenuButton, coordinates);
 
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.CENTER;
-        mainPanel.add(orderButton, gbc);
+        coordinates.gridx = 0;
+        coordinates.gridy = 2;
+        coordinates.gridwidth = 2;
+        coordinates.anchor = GridBagConstraints.CENTER;
+        rootViewPanel.add(processOrderButton, coordinates);
 
-        add(mainPanel);
+        // Adding panel to the main window
+        add(rootViewPanel);
     }
 }

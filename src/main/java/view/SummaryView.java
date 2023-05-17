@@ -1,91 +1,117 @@
 package view;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.event.ActionEvent;
 
 import model.Order;
 
-public class SummaryView extends JFrame
-{
-    private JButton summaryButton;
-    private JButton viewPriceButton;
-    private JButton exitButton;
+public class SummaryView extends JFrame {
+    // Define Order model
     private Order orderModel;
 
+    // Define GUI attributes
+    private JButton terminateProgramButton;
+    private JButton processViewPriceButton;
+    private JButton processSummaryButton;
+
+    /*
+     * Method name : SummaryView
+     * Parameters : Order ordermodel
+     * Description : Alternate constructor
+     */
     public SummaryView(Order ordermodel) {
+        // Define title of the view
         super("Order Summary");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 300);
-        setLocationRelativeTo(null);
-        setResizable(false);
+        // initialize the defined order model
         this.orderModel = ordermodel;
+        // setup other configuration for the order window
+        setSize(400, 300);
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        // initialize and render GUI components of login window - same as setup() method
+        // in pre-tutorials
         initComponents();
     }
 
+    /*
+     * Method name : initComponents
+     * Parameters : None
+     * Description : a method render GUI components - same as setup() method in
+     * pre-tutorials
+     */
     private void initComponents() {
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
+        // Define the main panel of the Order window and set it to the layout
+        JPanel rootViewPanel = new JPanel();
+        rootViewPanel.setLayout(new GridBagLayout());
+        GridBagConstraints coordinates = new GridBagConstraints();
 
-        JLabel titleLabel = new JLabel("Order Summary");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        // setting the grid pixel locations
+        coordinates.insets = new Insets(10, 10, 10, 10);
 
-        summaryButton = new JButton("View Summary");
-        summaryButton.addActionListener(new ActionListener() {
+        // define widnow's title and its font style
+        JLabel windowHeader = new JLabel("Order Summary");
+        windowHeader.setFont(new Font("Arial", Font.BOLD, 24));
+
+        processSummaryButton = new JButton("View Summary");
+
+        // define the action handler
+        processSummaryButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Add place order logic here
-                String summary = orderModel.displayOrderSummary();
-                JOptionPane.showMessageDialog(SummaryView.this, "Order Summary:\n" + summary);
+                String generatedFullSummary = orderModel.displayOrderSummary();
+                JOptionPane.showMessageDialog(SummaryView.this, "Order Summary:\n" + generatedFullSummary);
             }
         });
 
-        viewPriceButton = new JButton("View Price");
-        viewPriceButton.addActionListener(new ActionListener() {
+        processViewPriceButton = new JButton("View Price");
+
+        // define the action handler
+        processViewPriceButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Add place order logic here
-                String price = orderModel.displayTotalPrice();
-                JOptionPane.showMessageDialog(SummaryView.this, "Total Price:\n" + price);
+                String generatedTotalPrice = orderModel.displayTotalPrice();
+                JOptionPane.showMessageDialog(SummaryView.this, "Total Price:\n" + generatedTotalPrice);
             }
         });
 
-        exitButton = new JButton("Exit");
-        exitButton.addActionListener(new ActionListener() {
+        terminateProgramButton = new JButton("Exit");
+
+        // define the action handler
+        terminateProgramButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Add place order logic here
                 JOptionPane.showMessageDialog(SummaryView.this, "THANK YOU!!");
                 System.exit(0);
             }
         });
 
+        // setup grid coordinations for each element in the layout
+        coordinates.gridx = 0;
+        coordinates.gridy = 0;
+        coordinates.gridwidth = 2;
+        coordinates.anchor = GridBagConstraints.CENTER;
+        rootViewPanel.add(windowHeader, coordinates);
 
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.CENTER;
-        mainPanel.add(titleLabel, gbc);
+        coordinates.gridx = 0;
+        coordinates.gridy = 1;
+        coordinates.gridwidth = 2;
+        coordinates.anchor = GridBagConstraints.CENTER;
+        rootViewPanel.add(processSummaryButton, coordinates);
 
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.CENTER;
-        mainPanel.add(summaryButton, gbc);
+        coordinates.gridx = 0;
+        coordinates.gridy = 2;
+        coordinates.anchor = GridBagConstraints.CENTER;
+        rootViewPanel.add(processViewPriceButton, coordinates);
 
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.anchor = GridBagConstraints.CENTER;
-        mainPanel.add(viewPriceButton, gbc);
+        coordinates.gridx = 0;
+        coordinates.gridy = 3;
+        coordinates.anchor = GridBagConstraints.CENTER;
+        rootViewPanel.add(terminateProgramButton, coordinates);
 
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.anchor = GridBagConstraints.CENTER;
-        mainPanel.add(exitButton, gbc);
-
-        add(mainPanel);
+        // Adding panel to the main window 
+        add(rootViewPanel);
     }
 }

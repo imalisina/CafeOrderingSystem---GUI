@@ -6,43 +6,64 @@ import System.Encryptor;
 import System.FileHandler;
 
 public class Login extends Updater {
-    private String username;
-    private String password;
-
+    // Define system instances
     private FileHandler fileHandler = new FileHandler();
     private Encryptor encryptor = new Encryptor();
 
-    public void setUsername(String username) {
-        this.username = username;
+    // Define variables
+    private String customerPassword;
+    private String customerUsername;
+
+    /*
+     * Method name : setUsername
+     * Parameters : String customerUsername
+     * Description : a setter method to update the username value
+     */
+    public void setUsername(String customerUsername) {
+        this.customerUsername = customerUsername;
         updateViews();
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    /*
+     * Method name : setPassword
+     * Parameters : String customerPassword
+     * Description : a setter method to update the password value
+     */
+    public void setPassword(String customerPassword) {
+        this.customerPassword = customerPassword;
         updateViews();
     }
 
-    // Example: Perform login authentication logic
-    public boolean authenticate(String username, String password) throws NoSuchAlgorithmException {
-        String hashedPassword = encryptor.encryptionHandler(password);
-        System.out.println(hashedPassword);
-        if (username.equals(fileHandler.readFromFile("UsernameData")) 
-            || hashedPassword.equals(fileHandler.readFromFile("PasswordData"))) {
-            System.out.println("yes");
+    /*
+     * Method name : authenticate
+     * Parameters : String customerUsername, String customerPassword
+     * Description : method to validate and perform authentication operation
+     */
+    public boolean authenticate(String customerUsername, String customerPassword) throws NoSuchAlgorithmException {
+        String hashedPassword = encryptor.encryptionHandler(customerPassword);
+        if (customerUsername.equals(fileHandler.readFromFile("UsernameData"))
+                || hashedPassword.equals(fileHandler.readFromFile("PasswordData"))) {
             return true;
         } else {
-            System.out.println("no");
             return false;
         }
     }
 
-    // Example: Getters for username and password
-
+    /*
+     * Method name : getUsername
+     * Parameters : None
+     * Description : method to retrieve username value
+     */
     public String getUsername() {
-        return username;
+        return customerUsername;
     }
 
+    /*
+     * Method name : getPassword
+     * Parameters : None
+     * Description : method to retrieve password value
+     */
     public String getPassword() {
-        return password;
+        return customerPassword;
     }
 }

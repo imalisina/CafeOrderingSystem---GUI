@@ -1,59 +1,82 @@
 package view;
 
+import java.security.NoSuchAlgorithmException;
+import java.awt.event.*;
 import javax.swing.*;
+import java.awt.*;
 
 import model.Login;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.security.NoSuchAlgorithmException;
-
 public class LoginView extends JFrame {
-    private JTextField usernameField;
-    private JPasswordField passwordField;
-    private JButton loginButton;
+
+    // Define login model
     private Login loginModel;
 
+    // Define GUI attributes
+    private JTextField usernameInputField;
+    private JButton processLoginButton;
+    private JPasswordField passwordInputField;
+
+    /*
+     * Method name : LoginView
+     * Parameters : Login loginModel
+     * Description : Alternate constructor
+     */
     public LoginView(Login loginModel) {
+        // Define title of the view
         super("Login");
+        // initialize the defined login model
         this.loginModel = loginModel;
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // setup other configuration for the login window
         setSize(400, 250);
-        setLocationRelativeTo(null);
         setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        // initialize and render GUI components of login window - same as setup() method
+        // in pre-tutorials
         initComponents();
     }
 
+    /*
+     * Method name : initComponents
+     * Parameters : None
+     * Description : a method render GUI components - same as setup() method in
+     * pre-tutorials
+     */
     private void initComponents() {
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
+        // Define the main panel of the login window and set it to the layout
+        JPanel rootViewPanel = new JPanel();
+        rootViewPanel.setLayout(new GridBagLayout());
+        GridBagConstraints coordinates = new GridBagConstraints();
 
-        JLabel titleLabel = new JLabel("Login");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        // setting the grid pixel locations
+        coordinates.insets = new Insets(10, 10, 10, 10);
 
-        JLabel usernameLabel = new JLabel("Username:");
-        usernameField = new JTextField(20);
+        // Define window's title and its font styles
+        JLabel screenHeader = new JLabel("Login");
+        screenHeader.setFont(new Font("Arial", Font.BOLD, 24));
 
-        JLabel passwordLabel = new JLabel("Password:");
-        passwordField = new JPasswordField(20);
+        JLabel passwordInputLabel = new JLabel("Password:");
+        passwordInputField = new JPasswordField(20);
 
-        loginButton = new JButton("Login");
-        loginButton.addActionListener(new ActionListener() {
+        JLabel usernameInputLabel = new JLabel("Username:");
+        usernameInputField = new JTextField(20);
+        
+        processLoginButton = new JButton("Login");
+
+        // Define the action handler
+        processLoginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
-                String password = passwordField.getPassword().toString();
+                String username = usernameInputField.getText();
+                String password = passwordInputField.getPassword().toString();
 
-                // Example: Display login information
+                // Handle errors during listening for an event
                 try {
                     if (loginModel.authenticate(username, password)) {
                         JOptionPane.showMessageDialog(LoginView.this,
                                 "Username: " + username + "\nPassword: " + new String(password));
-                        // Adding order view
                         try {
-                            // Use the platform look and feel for better integration
                             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                         } catch (Exception error) {
                             error.printStackTrace();
@@ -69,45 +92,46 @@ public class LoginView extends JFrame {
                         JOptionPane.showMessageDialog(LoginView.this, "401 - Unauthorized User");
                     }
                 } catch (HeadlessException | NoSuchAlgorithmException e1) {
-                    // TODO Auto-generated catch block
                     e1.printStackTrace();
                 }
             }
         });
 
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.CENTER;
-        mainPanel.add(titleLabel, gbc);
+        // Setup grid coordinations for each element in the layout
+        coordinates.gridx = 0;
+        coordinates.gridy = 0;
+        coordinates.gridwidth = 2;
+        coordinates.anchor = GridBagConstraints.CENTER;
+        rootViewPanel.add(screenHeader, coordinates);
 
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.gridwidth = 1;
-        gbc.anchor = GridBagConstraints.LINE_END;
-        mainPanel.add(usernameLabel, gbc);
+        coordinates.gridx = 0;
+        coordinates.gridy = 1;
+        coordinates.gridwidth = 1;
+        coordinates.anchor = GridBagConstraints.LINE_END;
+        rootViewPanel.add(usernameInputLabel, coordinates);
 
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.anchor = GridBagConstraints.LINE_START;
-        mainPanel.add(usernameField, gbc);
+        coordinates.gridx = 1;
+        coordinates.gridy = 1;
+        coordinates.anchor = GridBagConstraints.LINE_START;
+        rootViewPanel.add(usernameInputField, coordinates);
 
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.anchor = GridBagConstraints.LINE_END;
-        mainPanel.add(passwordLabel, gbc);
+        coordinates.gridx = 0;
+        coordinates.gridy = 2;
+        coordinates.anchor = GridBagConstraints.LINE_END;
+        rootViewPanel.add(passwordInputLabel, coordinates);
 
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        gbc.anchor = GridBagConstraints.LINE_START;
-        mainPanel.add(passwordField, gbc);
+        coordinates.gridx = 1;
+        coordinates.gridy = 2;
+        coordinates.anchor = GridBagConstraints.LINE_START;
+        rootViewPanel.add(passwordInputField, coordinates);
 
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.CENTER;
-        mainPanel.add(loginButton, gbc);
+        coordinates.gridx = 0;
+        coordinates.gridy = 3;
+        coordinates.gridwidth = 2;
+        coordinates.anchor = GridBagConstraints.CENTER;
+        rootViewPanel.add(processLoginButton, coordinates);
 
-        add(mainPanel);
+        // Adding panel to the main window
+        add(rootViewPanel);
     }
 }
