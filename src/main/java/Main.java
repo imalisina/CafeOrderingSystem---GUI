@@ -8,7 +8,20 @@ import view.RegisterView;
 
 public class Main {
     public static void main(String[] args) {
-        
+        Register registerModel = new Register();
+        try {
+            // Use the platform look and feel for better integration
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                RegisterView registerView = new RegisterView(registerModel);
+                registerView.setVisible(true);
+            }
+        });
     }
 }
 
