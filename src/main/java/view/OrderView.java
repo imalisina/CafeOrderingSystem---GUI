@@ -49,6 +49,14 @@ public class OrderView extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // TODO: Add place order logic here
                 JOptionPane.showMessageDialog(OrderView.this, "Place Order button clicked");
+
+                SwingUtilities.invokeLater(new Runnable() 
+                {
+                    public void run() {
+                        PlaceOrderView placeOrderView = new PlaceOrderView();
+                        placeOrderView.setVisible(true);
+                    }
+                });
             }
         });
 

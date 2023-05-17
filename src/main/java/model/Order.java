@@ -4,10 +4,7 @@ import java.util.LinkedList;
 
 public class Order extends Updater{
     // attributes
-    private double totalPrice;
-
-    // global variable to store user choice
-    private int categoryChoiceId = 0;
+    private double totalPrice = 0;
 
     // constants
     private final int CATEGORY_MENU_SIZE = 5;
@@ -55,36 +52,69 @@ public class Order extends Updater{
      * Parameters : none
      * Description : - allow the user to randomly generate their meals
      */
-    public void autoGenerateMeal()
+    public String autoGenerateMeal(String category)
     {
-         // Loop through the code until the user is satisfied with their selection
-        do 
-        {
-            // Switch case to specify the order 
-            switch (categoryChoiceId) {
-                case 1:
-                    // find and display the item requested by the user
-                    Food breakfast = finder.findBreakfast(generateMealId(CATEGORY_MENU_SIZE));
-                    System.out.println("\n" + breakfast.toString());
-                    // Add the item to the specified list for the order summary
-                    foodOrder.add(breakfast);
-                    break;
-                case 2:
-                    // find and display the item requested by the user
-                    Food lunch = finder.findLunch(generateMealId(CATEGORY_MENU_SIZE));
-                    System.out.println("\n" + lunch.toString());
-                    // Add the item to the specified list for the order summary
-                    foodOrder.add(lunch);
-                    break;
-                case 3:
-                    // find and display the item requested by the user
-                    Food fastfood = finder.findFastFood(generateMealId(CATEGORY_MENU_SIZE));
-                    System.out.println("\n" + fastfood.toString());
-                    // Add the item to the specified list for the order summary
-                    foodOrder.add(fastfood);
-                    break;
+        // Switch case to specify the order 
+        switch (category) {
+            case "Breakfast":
+                // find and display the item requested by the user
+                Food breakfast = finder.findBreakfast(generateMealId(CATEGORY_MENU_SIZE));
+                // Add the item to the specified list for the order summary
+                foodOrder.add(breakfast);
+                return breakfast.toString();
+            case "Lunch":
+                // find and display the item requested by the user
+                Food lunch = finder.findLunch(generateMealId(CATEGORY_MENU_SIZE));
+                // Add the item to the specified list for the order summary
+                foodOrder.add(lunch);
+                return lunch.toString();
+            case "Fast Food":
+                // find and display the item requested by the user
+                Food fastfood = finder.findFastFood(generateMealId(CATEGORY_MENU_SIZE));
+                // Add the item to the specified list for the order summary
+                foodOrder.add(fastfood);
+                return fastfood.toString();
+        }
+        return "";
+    }
+
+    public String displayOrderSummary() {
+        StringBuilder summaryBuilder = new StringBuilder();
+
+        // If the user ordered from the Food Category, display each Item
+        if (foodOrder.size() != 0) {
+            // Loop through the food list
+            for (Food food : foodOrder) {
+                // Calculate new total
+                totalPrice += food.price;
+
+                // Append food item information to the summary
+                summaryBuilder.append(food.toString());
+                summaryBuilder.append("\n\n");
             }
-        } while (categoryChoiceId != 0);
+
+            // Return the complete summary
+            return summaryBuilder.toString();
+        }
+
+        return "No Meal Selected!!";
+    }
+
+
+    public String displayTotalPrice()
+    {
+        // If the user ordered fro the Food Category, display each Item
+        if (foodOrder.size() != 0) {
+            // Loop through the food list
+            for (Food food : foodOrder) {
+                // Calculate new total
+                totalPrice += food.price;
+            }
+        }
+        // Format price to 2 decimal places
+        String price = formatter.format(totalPrice);
+        // Display formatted total cost of order
+        return "\nTOTAL : $" + price;
     }
 
     /*
@@ -129,5 +159,10 @@ public class Order extends Updater{
         Foods fastfood = new Foods();
         fastfood.filterFastFoodMeals();
         return fastfood.displayFastFoodMenu();
+    }
+
+    public double getTotalPrice()
+    {
+        return totalPrice;
     }
 }
