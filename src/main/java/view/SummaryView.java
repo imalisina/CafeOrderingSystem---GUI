@@ -44,14 +44,16 @@ public class SummaryView extends JFrame
         });
 
         viewPriceButton = new JButton("View Price");
+        String price = orderModel.displayTotalPrice(); // Calculate the total price
+
         viewPriceButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Add place order logic here
-                String price = orderModel.displayTotalPrice();
                 JOptionPane.showMessageDialog(SummaryView.this, "Total Price:\n" + price);
             }
         });
+
+
 
         exitButton = new JButton("Exit");
         exitButton.addActionListener(new ActionListener() {
