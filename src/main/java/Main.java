@@ -2,12 +2,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import model.Login;
-import model.Order;
 import model.Register;
 import view.LoginView;
 import view.RegisterView;
-import view.ReportView;
-import view.SummaryView;
 
 public class Main {
     public static void main(String[] args) {
@@ -25,15 +22,6 @@ public class Main {
                 registerView.setVisible(true);
             }
         });
-
-        // Create an instance of the Order model
-        Order order = new Order();
-
-        // Create an instance of the ReportView and pass the order model
-        ReportView reportView = new ReportView(order);
-
-        // Display the ReportView
-        reportView.setVisible(true);
 
         // **Uncomment the following line to check the login operation**
         // Login loginModel = new Login();
