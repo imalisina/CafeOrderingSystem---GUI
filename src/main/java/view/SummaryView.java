@@ -67,12 +67,12 @@ public class SummaryView extends JFrame {
         });
 
         processViewPriceButton = new JButton("View Price");
+        String generatedTotalPrice = orderModel.displayTotalPrice();
 
         // define the action handler
         processViewPriceButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String generatedTotalPrice = orderModel.displayTotalPrice();
                 JOptionPane.showMessageDialog(SummaryView.this, "Total Price:\n" + generatedTotalPrice);
             }
         });
